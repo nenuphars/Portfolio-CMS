@@ -4,7 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "tsx src/index.ts",
+    "start": "node dist/index.js",
+    "check": "tsc --noEmit",
+    "build": "tsc",
+    "lint": "eslint",
+    "format": "prettier"
   },
   "keywords": [],
   "author": "",
@@ -18,9 +23,10 @@
     "mongoose": "^9.6.2"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.9.3",
-    "@types/cors": "^2.8.19",
-    "@types/express": "^5.0.6"
+    "typescript-eslint": "^8.59.4"
   }
 }
