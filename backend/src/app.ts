@@ -1,7 +1,9 @@
 // backend/src/app.ts
-import express from "express";
+import express, { NextFunction, Request, Response } from "express";
 import cors from "cors";
 import helmet from "helmet";
+import { AppError } from "./utils/AppError";
+import authRoutes from "./routes/auth.routes";
 
 const app = express();
 
@@ -16,9 +18,17 @@ app.get("/health", (_req, res) => {
 });
 
 // API routes (added later)
-// app.use('/api/auth', authRoutes)
+app.use("/api/auth", authRoutes);
 // app.use('/api/posts', postRoutes)
 
 // Global error handler (added in issue #3)
+app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
+  if (err.name === "AppError") {
+    const appErr = err as AppError;
+    return res.status(appErr.statusCode).json({ error: appErr.message });
+  }
+  console.error(err);
+  res.status(500).json({ error: "Internal Server Error" });
+});
 
 export default app;
