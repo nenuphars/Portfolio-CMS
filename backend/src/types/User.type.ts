@@ -14,10 +14,3 @@ export type UserLogin = {
   username: string;
   password: string;
 };
-
-export type UserAuthResponse = {
-  _id?: string;
-  username: string;
-  password?: string;
-  createdAt?: Date;
-};
