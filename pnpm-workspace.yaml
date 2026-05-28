@@ -2,8 +2,10 @@ packages:
   - "frontend"
   - "backend"
 allowBuilds:
+  bcrypt: true
   sharp: true
   unrs-resolver: true
 ignoredBuiltDependencies:
   - sharp
   - unrs-resolver
+  - bcrypt
