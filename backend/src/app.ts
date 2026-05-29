@@ -5,6 +5,7 @@ import helmet from "helmet";
 import { AppError } from "./utils/AppError";
 import authRoutes from "./routes/auth.routes";
 import postRoutes from "./routes/post.routes";
+import commentRoutes from "./routes/comment.routes";
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.get("/health", (_req, res) => {
 // API routes (added later)
 app.use("/api/auth", authRoutes);
 app.use("/api/posts", postRoutes);
+app.use("/api/comments", commentRoutes);
 
 // Global error handler (added in issue #3)
 app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
