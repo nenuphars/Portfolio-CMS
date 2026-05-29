@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from "express";
 import { Post } from "../models/Post";
-import { PostType } from "../types/Post.type";
 import { AppError } from "../utils/AppError";
 
 export async function getAllPosts(req: Request, res: Response, next: NextFunction) {
