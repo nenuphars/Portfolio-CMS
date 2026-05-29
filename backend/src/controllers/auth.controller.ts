@@ -22,9 +22,9 @@ export async function login(req: Request, res: Response, next: NextFunction) {
   try {
     const { username, password } = req.body;
     const user = await User.findOne({ username });
-    if (!user) throw new AppError(401, "Invalid credentials, incorrect username");
+    if (!user) throw new AppError(401, "Invalid credentials: incorrect username");
     const valid = await bcrypt.compare(password, user.passwordHash);
-    if (!valid) throw new AppError(401, "Invalid credentials, incorrect password");
+    if (!valid) throw new AppError(401, "Invalid credentials: incorrect password");
     const token = signToken(user._id.toString());
     res.json({ token });
   } catch (err) {
