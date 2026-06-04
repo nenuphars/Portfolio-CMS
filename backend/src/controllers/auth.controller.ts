@@ -32,9 +32,17 @@ export async function login(req: Request, res: Response, next: NextFunction) {
   }
 }
 
-export async function me(req: Request, res: Response) {
+export async function me(req: Request, res: Response, next: NextFunction) {
   // req.user is attached by authenticate middleware
-  res.json(req.user);
+  try {
+    if (!req.user) {
+      throw new AppError(404, "Could not retrieve user id");
+    }
+    const user = await User.findById(req.user.userId);
+    res.json({ username: user?.username });
+  } catch (err) {
+    next(err);
+  }
 }
 
 function signToken(userId: string) {

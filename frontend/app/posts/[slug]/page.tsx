@@ -4,6 +4,7 @@ import { getPost } from "@/lib/posts.api";
 import { notFound } from "next/navigation";
 import CommentSection from "./components/CommentSection";
 import { formatDate } from "@/lib/utils";
+import HomeButton from "@/components/HomeButton";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -23,7 +24,8 @@ export default async function PostPage({ params }: Props) {
 
   return (
     <div className="flex flex-col flex-1 items-center justify-center font-sans">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
+      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-16 px-16 bg-white dark:bg-black sm:items-start">
+        <HomeButton />
         <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
           <p className="text-sm text-zinc-400">
             {post?.author.username}

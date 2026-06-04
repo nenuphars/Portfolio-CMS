@@ -3,6 +3,7 @@
 import { useAuth } from "@/lib/auth";
 import { registerUser } from "@/lib/auth.api";
 import { LoginResponse } from "@/types/Auth.types";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 function Page() {
@@ -10,12 +11,15 @@ function Page() {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
+  const router = useRouter();
+
   async function onSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
     try {
       const response: LoginResponse = await registerUser({ username, password });
       console.log(response);
       login(response.token);
+      router.push("/");
     } catch (err) {
       console.log(err);
     }

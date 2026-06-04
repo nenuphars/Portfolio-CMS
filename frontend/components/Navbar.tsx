@@ -2,7 +2,6 @@
 "use client";
 
 import { useAuth } from "@/lib/auth";
-import Error from "next/error";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -29,7 +28,7 @@ export function Navbar() {
         <div className="relative flex h-16 items-center justify-between">
           {user ? (
             <>
-              <span>Hello</span>
+              <span>Hello, {user.username}</span>
               <button onClick={logout}>Logout</button>
             </>
           ) : (

@@ -5,8 +5,7 @@ import { createContext, useContext, useState, useEffect } from "react";
 
 interface User {
   userId: string;
-  name: string;
-  email: string;
+  username: string;
 }
 
 interface AuthContextType {
@@ -31,6 +30,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       });
       if (!res.ok) throw new Error();
       const data = await res.json();
+      console.log("User data");
       setUser(data);
       setToken(token);
     } catch {
