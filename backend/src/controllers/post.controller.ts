@@ -20,7 +20,7 @@ export async function getAllPosts(req: Request, res: Response, next: NextFunctio
     const skip = (pageNum - 1) * limitNum;
 
     const posts = await Post.find(filter)
-      .populate("author", "name")
+      .populate("author", "username")
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(limitNum);
@@ -60,7 +60,7 @@ export async function createPost(req: Request, res: Response, next: NextFunction
 export async function getPostBySlug(req: Request, res: Response, next: NextFunction) {
   const { slug } = req.params;
   try {
-    const response = await Post.findOne({ slug: slug });
+    const response = await Post.findOne({ slug: slug }).populate("author", "username");
     res.status(200).json(response);
   } catch (err) {
     next(err);

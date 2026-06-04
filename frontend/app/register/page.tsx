@@ -25,7 +25,7 @@ function Page() {
     <div>
       <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-white">
+          <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-zinc-900">
             Register as a new user
           </h2>
         </div>
@@ -33,7 +33,7 @@ function Page() {
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form onSubmit={(e) => onSubmit(e)} className="space-y-6">
             <div>
-              <label htmlFor="username" className="block text-sm/6 font-medium text-gray-400">
+              <label htmlFor="username" className="block text-sm/6 font-medium text-zinc-800">
                 Username
               </label>
               <div className="mt-2">
@@ -48,14 +48,14 @@ function Page() {
                     setUsername(e.target.value);
                   }}
                   autoComplete="username"
-                  className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-400 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
+                  className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-zinc-900 outline-1 -outline-offset-1 outline-zinc-400 placeholder:text-zinc-700 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
                 />
               </div>
             </div>
 
             <div>
               <div className="flex items-center justify-between">
-                <label htmlFor="password" className="block text-sm/6 font-medium text-gray-400">
+                <label htmlFor="password" className="block text-sm/6 font-medium text-zinc-900">
                   Password
                 </label>
               </div>
@@ -71,7 +71,7 @@ function Page() {
                     setPassword(e.target.value);
                   }}
                   autoComplete="current-password"
-                  className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-400 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
+                  className="block w-full rounded-md bg-zinc/5 px-3 py-1.5 text-base text-zinc-900 outline-1 -outline-offset-1 outline-zinc-400 placeholder:text-zinc-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
                 />
               </div>
             </div>
@@ -79,7 +79,7 @@ function Page() {
             <div>
               <button
                 type="submit"
-                className="flex w-full justify-center rounded-md bg-indigo-800 px-3 py-1.5 text-sm/6 font-semibold text-white hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+                className="flex w-full justify-center rounded-md bg-indigo-700 px-3 py-1.5 text-sm/6 font-semibold text-zinc-100 hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
               >
                 Register
               </button>
