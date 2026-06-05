@@ -1,21 +1,40 @@
 "use client";
 
+import FormValidationError from "@/components/FormValidationError";
 import { useAuth } from "@/lib/auth";
 import { registerUser } from "@/lib/auth.api";
+import { RegisterSchema } from "@/lib/validation";
 import { LoginResponse } from "@/types/Auth.types";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import * as z from "zod";
 
 function Page() {
   const { login } = useAuth();
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [passwordError, setPasswordError] = useState("");
+  const [usernameError, setUsernameError] = useState("");
 
   const router = useRouter();
 
   async function onSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
+    setPasswordError("");
+    setUsernameError("");
     try {
+      const validation = RegisterSchema.safeParse({ username, password });
+      if (!validation.success) {
+        const tree = z.treeifyError(validation.error);
+        // console.log("Validation response", validation, tree);
+        if (tree.properties?.password) {
+          setPasswordError(tree.properties.password.errors[0]);
+        }
+        if (tree.properties?.username) {
+          setUsernameError(tree.properties.username.errors[0]);
+        }
+        return;
+      }
       const response: LoginResponse = await registerUser({ username, password });
       console.log(response);
       login(response.token);
@@ -54,6 +73,7 @@ function Page() {
                   autoComplete="username"
                   className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-zinc-900 outline-1 -outline-offset-1 outline-zinc-400 placeholder:text-zinc-700 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
                 />
+                <FormValidationError message={usernameError} />
               </div>
             </div>
 
@@ -77,6 +97,7 @@ function Page() {
                   autoComplete="current-password"
                   className="block w-full rounded-md bg-zinc/5 px-3 py-1.5 text-base text-zinc-900 outline-1 -outline-offset-1 outline-zinc-400 placeholder:text-zinc-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
                 />
+                <FormValidationError message={passwordError} />
               </div>
             </div>
 
