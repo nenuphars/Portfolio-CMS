@@ -1,12 +1,12 @@
 // frontend/lib/posts.ts
 import { apiRequest } from "./api";
-import { Post, PostRequest, PostResponse } from "../types/Post.type";
+import { PaginationObject, Post, PostRequest, PostResponse } from "../types/Post.type";
 
 export function getPosts(params?: { tag?: string; page?: number }) {
   const query = new URLSearchParams();
   if (params?.tag) query.set("tag", params.tag);
   if (params?.page) query.set("page", String(params.page));
-  return apiRequest<{ posts: Post[]; pagination: object }>(`/api/posts?${query}`);
+  return apiRequest<{ posts: Post[]; pagination: PaginationObject }>(`/api/posts?${query}`);
 }
 
 export function getTags() {

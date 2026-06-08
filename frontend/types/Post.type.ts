@@ -40,3 +40,10 @@ export type PostList = {
   posts: Post[];
   pagination: object;
 };
+
+export type PaginationObject = {
+  page: number;
+  limit: number;
+  total: number;
+  pages: number;
+};
