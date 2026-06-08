@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { Post } from "../models/Post";
 import { AppError } from "../utils/AppError";
 
+// GET /api/posts?tag=${tag}&page=${page}
 export async function getAllPosts(req: Request, res: Response, next: NextFunction) {
   try {
     const { tag, page = "1", limit = "10" } = req.query;
@@ -41,6 +42,7 @@ export async function getAllPosts(req: Request, res: Response, next: NextFunctio
   }
 }
 
+// CREATE /api/posts
 export async function createPost(req: Request, res: Response, next: NextFunction) {
   const { title, body, status, tags } = req.body;
   try {
@@ -57,6 +59,7 @@ export async function createPost(req: Request, res: Response, next: NextFunction
   }
 }
 
+// GET /api/posts/:slug
 export async function getPostBySlug(req: Request, res: Response, next: NextFunction) {
   const { slug } = req.params;
   try {
@@ -67,6 +70,7 @@ export async function getPostBySlug(req: Request, res: Response, next: NextFunct
   }
 }
 
+// PATCH /api/posts/:id
 export async function updatePost(req: Request, res: Response, next: NextFunction) {
   const { id } = req.params;
   const user = req.user!.userId;
@@ -88,6 +92,7 @@ export async function updatePost(req: Request, res: Response, next: NextFunction
   }
 }
 
+// DELETE /api/posts/:id
 export async function deletePost(req: Request, res: Response, next: NextFunction) {
   const { id } = req.params;
   const user = req.user!.userId;
@@ -108,6 +113,7 @@ export async function deletePost(req: Request, res: Response, next: NextFunction
   }
 }
 
+// PATCH /api/posts/publish/:id
 export async function publishPost(req: Request, res: Response, next: NextFunction) {
   const { id } = req.params;
   const user = req.user!.userId;
