@@ -132,3 +132,13 @@ export async function publishPost(req: Request, res: Response, next: NextFunctio
     next(err);
   }
 }
+
+// GET /api/posts/tags
+export async function getTags(req: Request, res: Response, next: NextFunction) {
+  try {
+    const tags = await Post.distinct("tags", { status: "published" });
+    res.json(tags);
+  } catch (err) {
+    next(err);
+  }
+}

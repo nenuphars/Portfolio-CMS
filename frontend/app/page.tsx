@@ -1,3 +1,4 @@
+import CreateButton from "@/components/CreateButton";
 import { getPosts } from "@/lib/posts.api";
 import Link from "next/link";
 
@@ -7,11 +8,14 @@ export default async function Home() {
 
   return (
     <div className="flex flex-col flex-1 items-center justify-center font-sans">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-10 bg-white dark:bg-black sm:items-start">
+      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-10 bg-white dark:bg-zinc-800 sm:items-start">
         <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-4xl font-semibold leading-10 tracking-tight text-zinc-800 dark:text-zinc-50">
-            Posts
-          </h1>
+          <div className="flex flex-1 flex-row w-full max-w-3xl items-center justify-between">
+            <h1 className="max-w-xs text-4xl font-semibold leading-10 tracking-tight text-zinc-800 dark:text-zinc-50">
+              Posts
+            </h1>
+            <CreateButton title="Add" />
+          </div>
 
           <div>
             {posts.map((onePost) => {

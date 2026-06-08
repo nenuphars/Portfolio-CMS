@@ -1,6 +1,6 @@
 // frontend/lib/posts.ts
 import { apiRequest } from "./api";
-import { Post } from "../types/Post.type";
+import { Post, PostRequest, PostResponse } from "../types/Post.type";
 
 export function getPosts(params?: { tag?: string; page?: number }) {
   const query = new URLSearchParams();
@@ -9,12 +9,15 @@ export function getPosts(params?: { tag?: string; page?: number }) {
   return apiRequest<{ posts: Post[]; pagination: object }>(`/api/posts?${query}`);
 }
 
+export function getTags() {
+  return apiRequest<string[]>("/api/posts/tags");
+}
 export function getPost(slug: string) {
   return apiRequest<Post>(`/api/posts/${slug}`);
 }
 
-export function createPost(body: Partial<Post>, token: string) {
-  return apiRequest<Post>("/api/posts", { method: "POST", body, token });
+export function createPost(body: Partial<PostRequest>, token: string) {
+  return apiRequest<PostResponse>("/api/posts", { method: "POST", body, token });
 }
 
 export function updatePost(id: string, body: Partial<Post>, token: string) {
