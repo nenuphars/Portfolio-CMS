@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { Post } from "../models/Post";
 import { AppError } from "../utils/AppError";
 
+// GET /api/posts?tag=${tag}&page=${page}
 export async function getAllPosts(req: Request, res: Response, next: NextFunction) {
   try {
     const { tag, page = "1", limit = "10" } = req.query;
@@ -20,7 +21,7 @@ export async function getAllPosts(req: Request, res: Response, next: NextFunctio
     const skip = (pageNum - 1) * limitNum;
 
     const posts = await Post.find(filter)
-      .populate("author", "name")
+      .populate("author", "username")
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(limitNum);
@@ -41,6 +42,7 @@ export async function getAllPosts(req: Request, res: Response, next: NextFunctio
   }
 }
 
+// CREATE /api/posts
 export async function createPost(req: Request, res: Response, next: NextFunction) {
   const { title, body, status, tags } = req.body;
   try {
@@ -57,16 +59,18 @@ export async function createPost(req: Request, res: Response, next: NextFunction
   }
 }
 
+// GET /api/posts/:slug
 export async function getPostBySlug(req: Request, res: Response, next: NextFunction) {
   const { slug } = req.params;
   try {
-    const response = await Post.findOne({ slug: slug });
+    const response = await Post.findOne({ slug: slug }).populate("author", "username");
     res.status(200).json(response);
   } catch (err) {
     next(err);
   }
 }
 
+// PATCH /api/posts/:id
 export async function updatePost(req: Request, res: Response, next: NextFunction) {
   const { id } = req.params;
   const user = req.user!.userId;
@@ -88,6 +92,7 @@ export async function updatePost(req: Request, res: Response, next: NextFunction
   }
 }
 
+// DELETE /api/posts/:id
 export async function deletePost(req: Request, res: Response, next: NextFunction) {
   const { id } = req.params;
   const user = req.user!.userId;
@@ -108,6 +113,7 @@ export async function deletePost(req: Request, res: Response, next: NextFunction
   }
 }
 
+// PATCH /api/posts/publish/:id
 export async function publishPost(req: Request, res: Response, next: NextFunction) {
   const { id } = req.params;
   const user = req.user!.userId;
@@ -128,6 +134,16 @@ export async function publishPost(req: Request, res: Response, next: NextFunctio
     Object.assign(post, req.body);
     post.save();
     res.status(200).json(post);
+  } catch (err) {
+    next(err);
+  }
+}
+
+// GET /api/posts/tags
+export async function getTags(req: Request, res: Response, next: NextFunction) {
+  try {
+    const tags = await Post.distinct("tags", { status: "published" });
+    res.json(tags);
   } catch (err) {
     next(err);
   }

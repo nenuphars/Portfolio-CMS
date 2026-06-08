@@ -11,11 +11,14 @@ export interface CommentI extends Document {
   createdAt: Date;
 }
 
-const CommentSchema = new Schema({
-  post: { type: Schema.Types.ObjectId, ref: Post },
-  author: { type: Schema.Types.ObjectId, ref: User },
-  body: { type: String, required: true },
-  createdAt: { type: Date },
-});
+const CommentSchema = new Schema(
+  {
+    post: { type: Schema.Types.ObjectId, ref: Post },
+    author: { type: Schema.Types.ObjectId, ref: User },
+    body: { type: String, required: true },
+    createdAt: { type: Date },
+  },
+  { timestamps: true },
+);
 
 export const Comment = model("Comment", CommentSchema);

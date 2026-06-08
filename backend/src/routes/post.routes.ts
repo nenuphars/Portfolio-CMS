@@ -4,6 +4,7 @@ import {
   deletePost,
   getAllPosts,
   getPostBySlug,
+  getTags,
   publishPost,
   updatePost,
 } from "../controllers/post.controller";
@@ -12,6 +13,7 @@ import { authenticate } from "../middleware/authenticate";
 const postRoutes = Router();
 
 postRoutes.get("/", getAllPosts);
+postRoutes.get("/tags", getTags);
 postRoutes.post("/", authenticate, createPost);
 postRoutes.patch("/publish/:id", authenticate, publishPost);
 postRoutes.get("/:slug", getPostBySlug);

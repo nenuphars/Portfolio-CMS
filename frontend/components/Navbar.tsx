@@ -23,12 +23,12 @@ export function Navbar() {
   }
 
   return (
-    <nav className="relative bg-gray-800">
+    <nav className="relative bg-zinc-50">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="relative flex h-16 items-center justify-between">
           {user ? (
             <>
-              <span>Hi, {user.name}</span>
+              <span>Hello, {user.username}</span>
               <button onClick={logout}>Logout</button>
             </>
           ) : (
@@ -45,7 +45,7 @@ export function Navbar() {
                         className={classNames(
                           item.current
                             ? "bg-gray-900 text-white"
-                            : "text-gray-300 hover:bg-white/5 hover:text-white",
+                            : "text-gray-600 hover:bg-white/5 hover:text-indigo-500",
                           "rounded-md px-3 py-2 text-sm font-medium",
                         )}
                       >
