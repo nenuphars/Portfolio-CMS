@@ -42,6 +42,47 @@ export async function getAllPosts(req: Request, res: Response, next: NextFunctio
   }
 }
 
+// GET /api/posts/my-posts — auth required
+export async function getMyPosts(req: Request, res: Response, next: NextFunction) {
+  const { tag, page = "1", limit = "10" } = req.query;
+
+  // Additional parameters to porperly display the intended amount of posts per page
+  const pageNum = parseInt(page as string);
+  const limitNum = parseInt(limit as string);
+  const skip = (pageNum - 1) * limitNum;
+
+  let filter: Record<string, unknown> = { tags: "" };
+
+  // single tag — post must contain this tag
+  if (tag && typeof tag === "string") {
+    filter.tags = tag;
+  }
+
+  // multiple tags — post must contain ALL of these tags
+  if (Array.isArray(tag)) {
+    filter.tags = { $all: tag };
+  }
+  try {
+    const posts = await Post.find({ author: req.user!.userId }, filter)
+      .select("title slug status tags body createdAt updatedAt")
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limitNum);
+    const total = await Post.countDocuments();
+    res.json({
+      posts,
+      pagination: {
+        page: pageNum,
+        limit: limitNum,
+        total,
+        pages: Math.ceil(total / limitNum),
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
+}
+
 // CREATE /api/posts
 export async function createPost(req: Request, res: Response, next: NextFunction) {
   const { title, body, status, tags } = req.body;
