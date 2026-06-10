@@ -1,4 +1,3 @@
-// components/TagsSelect.tsx
 "use client";
 
 import CreatableSelect from "react-select/creatable";

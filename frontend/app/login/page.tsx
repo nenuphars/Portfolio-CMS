@@ -6,7 +6,7 @@ import { loginUser } from "@/lib/auth.api";
 import { LoginSchema } from "@/lib/validation";
 import { LoginResponse } from "@/types/Auth.types";
 import { useRouter } from "next/navigation";
-import React, { useState, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import * as z from "zod";
 
 function Login() {
@@ -18,9 +18,9 @@ function Login() {
 
   const router = useRouter();
 
-  useMemo(() => {
+  useEffect(() => {
     if (token) {
-      router.push("/");
+      router.replace("/");
     }
   }, [token, router]);
 

@@ -5,7 +5,6 @@ import { notFound } from "next/navigation";
 import CommentSection from "./components/CommentSection";
 import { formatDate } from "@/lib/utils";
 import HomeButton from "@/components/HomeButton";
-import CreateButton from "@/components/CreateButton";
 
 type Props = {
   params: Promise<{ slug: string }>;

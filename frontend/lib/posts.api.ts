@@ -18,7 +18,7 @@ export function getOwnPosts(token: string, params?: { tag?: string; page?: numbe
   if (params?.tag) query.set("tag", params.tag);
   if (params?.page) query.set("page", String(params.page));
   return apiRequest<{ posts: PostResponse[]; pagination: PaginationObject }>(
-    "/api/posts/own-posts",
+    "/api/posts/my-posts",
     { token },
   );
 }

@@ -5,9 +5,10 @@ import Link from "next/link";
 
 type Props = {
   title: string;
+  slug: string;
 };
 
-function CreateButton({ title }: Props) {
+function CreateButton({ title, slug }: Props) {
   const { user } = useAuth();
 
   // console.log("Create button user", user);
@@ -16,7 +17,7 @@ function CreateButton({ title }: Props) {
 
   return (
     <Link
-      href={"/posts/create"}
+      href={`/posts/edit/${slug}`}
       className="border border-box border-solid text-zinc-800 bg-zinc-50 hover:text-indigo-500 stroke-zinc-800 hover:stroke-indigo-500 py-2 px-2"
     >
       <div className="flex flex-row w-auto items-end justify-center">
