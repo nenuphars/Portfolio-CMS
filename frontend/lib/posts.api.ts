@@ -40,5 +40,9 @@ export function deletePost(id: string, token: string) {
 }
 
 export function publishPost(id: string, token: string) {
-  return apiRequest<Post>(`/api/posts/${id}/publish`, { method: "PATCH", token });
+  return apiRequest<Post>(`/api/posts/publish/${id}`, {
+    method: "PATCH",
+    token,
+    body: { status: "published" },
+  });
 }

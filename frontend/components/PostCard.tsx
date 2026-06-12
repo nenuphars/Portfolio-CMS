@@ -3,6 +3,7 @@ import { useAuth } from "@/lib/auth";
 import { PostResponse } from "@/types/Post.type";
 import Link from "next/link";
 import EditButton from "./EditButton";
+import PublishButton from "./PublishButton";
 type Props = {
   author?: string;
   post: PostResponse;
@@ -13,16 +14,16 @@ function PostCard({ author, post, parent }: Props) {
 
   return (
     <div className="flex flex-col flex-1 justify-between py-16 border-b border-solid border-zinc-400">
-      <div>
-        {user?.username === post.author.username && parent === "dashboard" && (
-          <EditButton title="Edit" slug={post.slug} />
-        )}
-
-        <Link href={`/posts/${post.slug}`}>
-          <h3 className=" text-2xl leading-6 tracking-tight text-zinc-800 dark:text-zinc-50  hover:text-indigo-500">
-            {post.title}
-          </h3>
-        </Link>
+      <div className="flex flex-row gap-4 items-center">
+        <div>
+          <Link href={`/posts/${post.slug}`}>
+            <h3 className=" text-2xl leading-6 tracking-tight text-zinc-800 dark:text-zinc-50 hover:text-indigo-500">
+              {post.title}
+            </h3>
+          </Link>
+        </div>
+        {parent === "dashboard" && <EditButton slug={post.slug} />}
+        {parent === "dashboard" && post.status === "draft" && <PublishButton postId={post._id} />}
       </div>
 
       <h5 className="text-zinc-800 py-6 ">Written by {author || post.author.username}</h5>

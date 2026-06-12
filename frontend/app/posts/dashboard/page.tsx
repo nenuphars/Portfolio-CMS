@@ -58,10 +58,11 @@ export default function Dashboard({ searchParams }: Props) {
     setPosts((prev) => prev.filter((p) => p._id !== id));
   }
 
-  async function handlePublishToggle(post: Post) {
-    const updated = await publishPost(post._id, token!);
-    setPosts((prev) => prev.map((p) => (p._id === updated._id ? updated : p)));
-  }
+  // async function handlePublishToggle(post: Post) {
+  //   const updated = await publishPost(post._id, token!);
+  //   setPosts((prev) => prev.map((p) => (p._id === updated._id ? updated : p)));
+  // }
+
   if (isLoading) return <p>Loading...</p>;
   return (
     <div className="flex flex-col flex-1 items-center justify-center font-sans">

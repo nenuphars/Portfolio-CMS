@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import React, { ChangeEvent, useState } from "react";
 import * as z from "zod";
 import { TagsSelect } from "@/components/TagsSelect";
-import HomeButton from "@/components/HomeButton";
+import BackButton from "@/components/BackButton";
 
 type Props = {
   existingTags: string[];
@@ -75,7 +75,7 @@ function CreatePostForm({ existingTags }: Props) {
     <div className="flex flex-1 flex-col items-center justify-center font-sans w-full">
       <main className="flex flex-1 w-full max-w-3xl flex-col items-start justify-between py-12 px-10 bg-white dark:bg-zinc-800 sm:item-start">
         <div className="flex flex-col items-start gap-6 w-full">
-          <HomeButton />
+          <BackButton />
           <h1 className="max-w-xs text-4xl font-semibold leading-10 tracking-tight text-zinc-800 dark:text-zinc-50 w-full">
             Create Post
           </h1>

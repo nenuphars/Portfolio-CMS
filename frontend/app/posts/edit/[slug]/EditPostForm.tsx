@@ -2,14 +2,14 @@
 
 import FormValidationError from "@/components/FormValidationError";
 import { useAuth } from "@/lib/auth";
-import { createPost, getPost, updatePost } from "@/lib/posts.api";
+import { updatePost } from "@/lib/posts.api";
 import { PostSchema } from "@/lib/validation";
 import { PostResponse, Status } from "@/types/Post.type";
 import { useRouter } from "next/navigation";
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import * as z from "zod";
 import { TagsSelect } from "@/components/TagsSelect";
-import HomeButton from "@/components/HomeButton";
+import BackButton from "@/components/BackButton";
 
 type Props = {
   post: PostResponse;
@@ -77,7 +77,7 @@ function EditPostForm({ post, existingTags }: Props) {
     <div className="flex flex-1 flex-col items-center justify-center font-sans w-full">
       <main className="flex flex-1 w-full max-w-3xl flex-col items-start justify-between py-12 px-10 bg-white dark:bg-zinc-800 sm:item-start">
         <div className="flex flex-col items-start gap-6 w-full">
-          <HomeButton />
+          <BackButton url="/posts/dashboard" />
           <h1 className="max-w-xs text-4xl font-semibold leading-10 tracking-tight text-zinc-800 dark:text-zinc-50 w-full">
             Edit Post
           </h1>
