@@ -20,7 +20,7 @@ function Login() {
 
   useEffect(() => {
     if (token) {
-      router.replace("/");
+      router.replace("/posts/dashboard");
     }
   }, [token, router]);
 

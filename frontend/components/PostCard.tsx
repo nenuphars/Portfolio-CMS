@@ -1,17 +1,16 @@
 "use client";
-import { useAuth } from "@/lib/auth";
+
 import { PostResponse } from "@/types/Post.type";
 import Link from "next/link";
 import EditButton from "./EditButton";
 import PublishButton from "./PublishButton";
+import DeleteButton from "./DeleteButton";
 type Props = {
   author?: string;
   post: PostResponse;
   parent: "dashboard" | "home";
 };
 function PostCard({ author, post, parent }: Props) {
-  const { user } = useAuth();
-
   return (
     <div className="flex flex-col flex-1 justify-between py-16 border-b border-solid border-zinc-400">
       <div className="flex flex-row gap-4 items-center">
@@ -24,6 +23,7 @@ function PostCard({ author, post, parent }: Props) {
         </div>
         {parent === "dashboard" && <EditButton slug={post.slug} />}
         {parent === "dashboard" && post.status === "draft" && <PublishButton postId={post._id} />}
+        {parent === "dashboard" && <DeleteButton postId={post._id} />}
       </div>
 
       <h5 className="text-zinc-800 py-6 ">Written by {author || post.author.username}</h5>

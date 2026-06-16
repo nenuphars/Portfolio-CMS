@@ -1,6 +1,6 @@
 import { useAuth } from "@/lib/auth";
 import { publishPost } from "@/lib/posts.api";
-import { useRouter } from "next/dist/client/components/navigation";
+import { useRouter } from "next/navigation";
 
 type Props = {
   postId: string;

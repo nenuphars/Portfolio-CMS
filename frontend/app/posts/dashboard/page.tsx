@@ -1,10 +1,11 @@
 "use client";
 
+import { useDeleteConfirmation } from "@/components/ConfirmDeleteDialog/confirmDelete";
 import CreateButton from "@/components/CreateButton";
 import PostCard from "@/components/PostCard";
 import { TagFilter } from "@/components/TagFilter";
 import { useAuth } from "@/lib/auth";
-import { deletePost, getOwnPosts, getTags, publishPost } from "@/lib/posts.api";
+import { deletePost, getOwnPosts, getTags } from "@/lib/posts.api";
 import { Post, PostResponse } from "@/types/Post.type";
 import { useRouter } from "next/dist/client/components/navigation";
 import Link from "next/dist/client/link";
@@ -51,17 +52,6 @@ export default function Dashboard({ searchParams }: Props) {
       .catch(console.error)
       .finally(() => setIsLoading(false));
   }, [token, page, searchParams, tag, router]);
-
-  async function handleDelete(id: string) {
-    if (!window.confirm("Delete this post?")) return;
-    await deletePost(id, token!);
-    setPosts((prev) => prev.filter((p) => p._id !== id));
-  }
-
-  // async function handlePublishToggle(post: Post) {
-  //   const updated = await publishPost(post._id, token!);
-  //   setPosts((prev) => prev.map((p) => (p._id === updated._id ? updated : p)));
-  // }
 
   if (isLoading) return <p>Loading...</p>;
   return (
