@@ -14,8 +14,13 @@ export const RegisterSchema = z.object({
     .max(50, { error: "Too long, max. 50 characters" }),
   password: z
     .string()
-    .min(12, { error: "Too short, min. 12 characters" })
-    .max(30, { error: "Too long, max. 30 characters" }),
+    .min(8, { error: "Be at least 8 characters long" })
+    .regex(/[a-zA-Z]/, { error: "Contain at least one letter." })
+    .regex(/[0-9]/, { error: "Contain at least one number." })
+    .regex(/[^a-zA-Z0-9]/, {
+      error: "Contain at least one special character.",
+    })
+    .trim(),
 });
 
 export const CommentSchema = z.object({

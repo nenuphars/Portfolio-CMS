@@ -6,12 +6,23 @@ export function getPosts(params?: { tag?: string; page?: number }) {
   const query = new URLSearchParams();
   if (params?.tag) query.set("tag", params.tag);
   if (params?.page) query.set("page", String(params.page));
-  return apiRequest<{ posts: Post[]; pagination: PaginationObject }>(`/api/posts?${query}`);
+  return apiRequest<{ posts: PostResponse[]; pagination: PaginationObject }>(`/api/posts?${query}`);
 }
 
 export function getTags() {
   return apiRequest<string[]>("/api/posts/tags");
 }
+
+export function getOwnPosts(token: string, params?: { tag?: string; page?: number }) {
+  const query = new URLSearchParams();
+  if (params?.tag) query.set("tag", params.tag);
+  if (params?.page) query.set("page", String(params.page));
+  return apiRequest<{ posts: PostResponse[]; pagination: PaginationObject }>(
+    "/api/posts/my-posts",
+    { token },
+  );
+}
+
 export function getPost(slug: string) {
   return apiRequest<Post>(`/api/posts/${slug}`);
 }
@@ -29,5 +40,9 @@ export function deletePost(id: string, token: string) {
 }
 
 export function publishPost(id: string, token: string) {
-  return apiRequest<Post>(`/api/posts/${id}/publish`, { method: "PATCH", token });
+  return apiRequest<Post>(`/api/posts/publish/${id}`, {
+    method: "PATCH",
+    token,
+    body: { status: "published" },
+  });
 }

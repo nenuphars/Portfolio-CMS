@@ -3,6 +3,7 @@ import {
   createPost,
   deletePost,
   getAllPosts,
+  getMyPosts,
   getPostBySlug,
   getTags,
   publishPost,
@@ -13,6 +14,7 @@ import { authenticate } from "../middleware/authenticate";
 const postRoutes = Router();
 
 postRoutes.get("/", getAllPosts);
+postRoutes.get("/my-posts", authenticate, getMyPosts);
 postRoutes.get("/tags", getTags);
 postRoutes.post("/", authenticate, createPost);
 postRoutes.patch("/publish/:id", authenticate, publishPost);

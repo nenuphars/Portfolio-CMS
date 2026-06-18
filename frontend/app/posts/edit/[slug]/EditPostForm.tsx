@@ -2,7 +2,7 @@
 
 import FormValidationError from "@/components/FormValidationError";
 import { useAuth } from "@/lib/auth";
-import { createPost } from "@/lib/posts.api";
+import { updatePost } from "@/lib/posts.api";
 import { PostSchema } from "@/lib/validation";
 import { PostResponse, Status } from "@/types/Post.type";
 import { useRouter } from "next/navigation";
@@ -12,18 +12,19 @@ import { TagsSelect } from "@/components/TagsSelect";
 import BackButton from "@/components/BackButton";
 
 type Props = {
+  post: PostResponse;
   existingTags: string[];
 };
 
-function CreatePostForm({ existingTags }: Props) {
-  const { token, user } = useAuth();
-  console.log("Existing Tags: ", existingTags);
+function EditPostForm({ post, existingTags }: Props) {
+  const { token, isLoading } = useAuth();
 
   // Form value states:
-  const [title, setTitle] = useState("");
-  const [body, setBody] = useState("");
-  const [status, setStatus] = useState<"draft" | "published">("draft");
-  const [tags, setTags] = useState<string[]>([]);
+  const [title, setTitle] = useState<string>(post.title);
+  const [body, setBody] = useState<string>(post.body);
+  const [status, setStatus] = useState<"draft" | "published">(post.status);
+  const [tags, setTags] = useState<string[]>(post.tags);
+  const [id, setId] = useState<string>(post._id);
 
   // Error states:
   const [titleError, setTitleError] = useState("");
@@ -60,24 +61,25 @@ function CreatePostForm({ existingTags }: Props) {
         }
         return;
       }
-      if (token) {
-        const response: PostResponse = await createPost(
-          { author: user?.username, title, body, status, tags },
-          token,
-        );
+      if (token && id) {
+        const response: PostResponse = await updatePost(id, { title, body, status, tags }, token);
         router.push(`/posts/${response.slug}`);
       } else return;
     } catch (err) {
       console.log(err);
     }
   }
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <div className="flex flex-1 flex-col items-center justify-center font-sans w-full">
       <main className="flex flex-1 w-full max-w-3xl flex-col items-start justify-between py-12 px-10 bg-white dark:bg-zinc-800 sm:item-start">
         <div className="flex flex-col items-start gap-6 w-full">
-          <BackButton />
+          <BackButton url="/posts/dashboard" />
           <h1 className="max-w-xs text-4xl font-semibold leading-10 tracking-tight text-zinc-800 dark:text-zinc-50 w-full">
-            Create Post
+            Edit Post
           </h1>
         </div>
         <div className="mt-10 sm:mx-auto w-full">
@@ -94,6 +96,7 @@ function CreatePostForm({ existingTags }: Props) {
                 name="title"
                 type="title"
                 required
+                value={title}
                 onChange={(e) => {
                   e.preventDefault();
                   setTitle(e.target.value);
@@ -108,6 +111,7 @@ function CreatePostForm({ existingTags }: Props) {
                 id="body"
                 name="body"
                 required
+                value={body}
                 onChange={(e) => {
                   e.preventDefault();
                   setBody(e.target.value);
@@ -122,6 +126,7 @@ function CreatePostForm({ existingTags }: Props) {
                 id="status-select"
                 name="status"
                 required
+                value={status}
                 onChange={(e: ChangeEvent<HTMLSelectElement, HTMLSelectElement>) => {
                   e.preventDefault();
                   setStatus(e.target.value as Status);
@@ -139,7 +144,7 @@ function CreatePostForm({ existingTags }: Props) {
             </div>
             <label htmlFor="title">Tags</label>
             <div className="flex flex-col flex-1 w-full">
-              <TagsSelect value={tags} onChange={setTags} existingTags={existingTags} />
+              <TagsSelect value={tags || []} onChange={setTags} existingTags={existingTags || []} />
               <FormValidationError message={tagsError} />
             </div>
             <div>
@@ -157,4 +162,4 @@ function CreatePostForm({ existingTags }: Props) {
   );
 }
 
-export default CreatePostForm;
+export default EditPostForm;

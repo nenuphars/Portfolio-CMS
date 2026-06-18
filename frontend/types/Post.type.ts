@@ -9,7 +9,7 @@ export type PostRequest = {
   body: string;
   author: string;
   status: Status;
-  tags: string | string[];
+  tags: string[];
 };
 
 export type PostResponse = {
@@ -19,7 +19,7 @@ export type PostResponse = {
   body: string;
   author: User;
   status: Status;
-  tags: string | string[];
+  tags: string[];
   createdAt: Date;
   updatedAt: Date;
 };

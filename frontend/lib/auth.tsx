@@ -1,4 +1,3 @@
-// frontend/src/lib/auth.tsx
 "use client";
 
 import { createContext, useContext, useState, useEffect } from "react";

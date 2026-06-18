@@ -30,7 +30,7 @@ export default async function Home({ searchParams }: Props) {
 
           <div>
             {posts.map((onePost) => {
-              return <PostCard post={onePost} key={onePost.slug} />;
+              return <PostCard post={onePost} key={onePost.slug} parent="home" />;
             })}
           </div>
           {pagination.page > 1 && (

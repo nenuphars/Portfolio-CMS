@@ -7,15 +7,24 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 export function Navbar() {
-  const { user, logout, isLoading } = useAuth();
+  const { user, logout, isLoading, token } = useAuth();
   const pathname = usePathname();
   const [currentRoute, setCurrentRoute] = useState<string>(pathname);
 
   if (isLoading) return null; // avoid the flash
 
-  const navigation = [
+  const anonNavigation = [
     { name: "Login", href: "/login", current: currentRoute === "/login" },
-    { name: "Register", href: "/register", current: currentRoute === "/register" },
+    {
+      name: "Register",
+      href: "/register",
+      current: currentRoute === "/register",
+    },
+  ];
+
+  const privateNavigation = [
+    { name: "Dashboard", href: "/posts/dashboard", current: currentRoute === "/dashboard" },
+    { name: "Posts", href: "/posts", current: currentRoute === "/posts" },
   ];
 
   function classNames(...classes: string[]) {
@@ -28,13 +37,13 @@ export function Navbar() {
         <div className="relative flex h-16 items-center justify-between">
           {user ? (
             <>
-              <span>Hello, {user.username}</span>
-              <button onClick={logout}>Logout</button>
-            </>
-          ) : (
-            <>
-              <div className="flex space x-4">
-                {navigation.map((item) => {
+              <div className="flex flex-row justify-between items-center space-x-4 w-full">
+                <span>
+                  <p className="text-zinc-600 hover:bg-white/5 rounded-md px-3 py-2 text-sm font-medium">
+                    Hello, {user.username}
+                  </p>
+                </span>
+                {privateNavigation.map((item) => {
                   return (
                     <Link
                       key={item.name}
@@ -44,8 +53,38 @@ export function Navbar() {
                       <p
                         className={classNames(
                           item.current
-                            ? "bg-gray-900 text-white"
-                            : "text-gray-600 hover:bg-white/5 hover:text-indigo-500",
+                            ? "bg-zinc-900 text-white"
+                            : "text-zinc-600 hover:bg-white/5 hover:text-indigo-500",
+                          "rounded-md px-3 py-2 text-sm font-medium",
+                        )}
+                      >
+                        {item.name}
+                      </p>
+                    </Link>
+                  );
+                })}
+                <button onClick={logout}>
+                  <p className="bg-zinc-900 text-white vrounded-md px-3 py-2 text-sm font-medium hover:cursor-pointer">
+                    Logout
+                  </p>
+                </button>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="flex space x-4">
+                {anonNavigation.map((item) => {
+                  return (
+                    <Link
+                      key={item.name}
+                      href={item.href}
+                      onClick={() => setCurrentRoute(item.href)}
+                    >
+                      <p
+                        className={classNames(
+                          item.current
+                            ? "bg-zinc-900 text-white"
+                            : "text-zinc-600 hover:bg-white/5 hover:text-indigo-500",
                           "rounded-md px-3 py-2 text-sm font-medium",
                         )}
                       >

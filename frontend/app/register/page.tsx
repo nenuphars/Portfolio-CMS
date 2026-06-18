@@ -6,17 +6,23 @@ import { registerUser } from "@/lib/auth.api";
 import { RegisterSchema } from "@/lib/validation";
 import { LoginResponse } from "@/types/Auth.types";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import * as z from "zod";
 
 function Page() {
-  const { login } = useAuth();
+  const { login, token } = useAuth();
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [passwordError, setPasswordError] = useState("");
   const [usernameError, setUsernameError] = useState("");
 
   const router = useRouter();
+
+  useMemo(() => {
+    if (token) {
+      router.push("/");
+    }
+  }, [token, router]);
 
   async function onSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();

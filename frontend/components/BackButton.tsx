@@ -2,10 +2,14 @@
 
 import Link from "next/link";
 
-function HomeButton() {
+type Props = {
+  url?: string;
+};
+
+function BackButton({ url }: Props) {
   return (
     <div className="flex flex-col w-auto items-start justify-center py-6">
-      <Link href={"/"} className="color-zinc-800">
+      <Link href={url || "/"} className="color-zinc-800">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -25,4 +29,4 @@ function HomeButton() {
   );
 }
 
-export default HomeButton;
+export default BackButton;
