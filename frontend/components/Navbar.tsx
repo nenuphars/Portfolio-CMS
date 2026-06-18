@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 export function Navbar() {
-  const { user, logout, isLoading, token } = useAuth();
+  const { user, logout, isLoading } = useAuth();
   const pathname = usePathname();
   const [currentRoute, setCurrentRoute] = useState<string>(pathname);
 
@@ -20,11 +20,12 @@ export function Navbar() {
       href: "/register",
       current: currentRoute === "/register",
     },
+    { name: "Posts", href: "/", current: currentRoute === "/" },
   ];
 
   const privateNavigation = [
     { name: "Dashboard", href: "/posts/dashboard", current: currentRoute === "/dashboard" },
-    { name: "Posts", href: "/posts", current: currentRoute === "/posts" },
+    { name: "Posts", href: "/", current: currentRoute === "/" },
   ];
 
   function classNames(...classes: string[]) {
